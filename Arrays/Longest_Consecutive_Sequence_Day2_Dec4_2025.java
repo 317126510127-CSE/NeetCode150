@@ -55,7 +55,7 @@ public class Solution {
 
 
 
-//Approach3:
+//Approach3:(Find start and calculate sequence)
 //Optimal Approach. - (HashSet). (Find start and find the size of sequence)
 //we can do with end-start as well but *****(start to end is optimal in worst case scenarios of fragmented sequences)
 // Time & Space Complexity
@@ -88,5 +88,42 @@ class Solution {
         }
 
         return longest;
+    }
+}
+
+
+
+
+//Approach4:(Find end and calculate sequence)
+//Optimal Approach. - (HashSet). (Find end and find the size of sequence)
+// Time & Space Complexity
+// Time complexity: O(n)
+// Space complexity: O(n)
+class Solution {
+    public int longestConsecutive(int[] nums) {
+
+        if (nums.length == 0) {
+            return 0;
+        }
+        HashSet<Integer> numSet = new HashSet<>();
+        for (int n : nums) {
+            numSet.add(n);
+        }
+
+        int longestSeq = 1;
+        int len = nums.length;
+        int start = Integer.MIN_VALUE;
+        for (int num : numSet) {
+            if (!numSet.contains(num + 1)) {
+                int seq = 1;
+                int end = num;
+                while (numSet.contains(end - 1)) {
+                    seq += 1;
+                    end -= 1;
+                }
+                longestSeq = Math.max(longestSeq, seq);
+            }
+        }
+        return longestSeq;
     }
 }
